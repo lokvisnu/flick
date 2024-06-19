@@ -53,14 +53,14 @@ const FlickCard = ({ flick }: { flick: Flick }) => {
     const handleSave = async () => {
         // check if video and image are selected
         if (!video.videoUrl|| video.thumbnail == "https://via.placeholder.com/150" || image == "https://via.placeholder.com/150") {
-            showNotification('Please select video and image', 'ERROR', 2000, 0,'BOTTOM'); // showNotification error notification
+            showNotification('Please select video and image', 'ERROR',0,'BOTTOM'); // showNotification error notification
             return;
         }
 
         setIsLoading(true); // set loading state
         // save the flick
         const result = await createVideo(video.videoUrl, image); // create video
-        
+
         if (result !== 'FAILED' && result !== 'CANCELLED') {
             showNotification('Flick Saved', 'INFO', 3000, 0, 'TOP'); // showNotification info notification
             console.log(result);
@@ -68,11 +68,11 @@ const FlickCard = ({ flick }: { flick: Flick }) => {
         }
         else if (result === 'CANCELLED') {
             console.log('Flick creation cancelled');
-            showNotification('Flick creation cancelled', 'INFO', 3000, 0, 'TOP'); // showNotification info notification
+            showNotification('Flick creation cancelled', 'INFO',0, 'TOP'); // showNotification info notification
         }
         else {
             console.log('Flick creation failed');
-            showNotification('Flick creation failed', 'ERROR', 3000, 0, 'TOP'); // showNotification error notification
+            showNotification('Flick creation failed', 'ERROR',0, 'TOP'); // showNotification error notification
         }
         setIsLoading(false); // set loading state
     }

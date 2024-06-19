@@ -11,9 +11,16 @@ type NotificationProps = {
     hide:()=>void,
 }
 const NotificationPanel = ({notificationChild,autoHide,message,opacity,type,position,hide}:NotificationProps)=>{
-    
+
     const {height , width} = Dimensions.get('window');
     const AnimationValue = React.useRef(new Animated.Value(0)).current;
+    React.useEffect(()=>{
+        if(autoHide){
+            setTimeout(()=>{
+                hide();
+            },3000);
+        }
+    })
 
     React.useEffect(()=>{
         if(type === 'CUSTOM') // if type is custom

@@ -12,7 +12,6 @@ export type NotificationContextType = {
 interface Notification {
     message: string,
     type: TYPE,
-    duration: number,
     opacity: number,
     position: POS,
     children?: React.ReactNode,
@@ -22,16 +21,9 @@ const NotificationContext = React.createContext({});
 type POS = 'TOP' | 'BOTTOM' | 'CENTER';
 type TYPE = 'INFO' | 'ERROR' | 'CUSTOM';
 const NotificationProvider = ({ children }: Props) => {
-    /* const [message, setMessage] = React.useState('');
-    const [visible, setVisible] = React.useState(false);
-    const [type, setType] = React.useState<TYPE>('INFO');
-    const [opacity, setOpacity] = React.useState(0.5);
-    const [position, setPosition] = React.useState<POS>('TOP');
-    const [notificationChild, setNotificationChild] = React.useState<React.ReactNode>(<></>);
-    const [autoHide, setAutoHide] = React.useState(true); */
     const [notification, setNotification] = React.useState<Notification[]>([]);
     const show = (message: string,
-        type: TYPE, duration: number,
+        type: TYPE,
         opacity: number = 0.5,
         position: POS,
         children?: React.ReactNode,
@@ -39,7 +31,6 @@ const NotificationProvider = ({ children }: Props) => {
         setNotification([...notification, {
             message,
             type,
-            duration,
             opacity,
             position,
             children,
@@ -49,10 +40,6 @@ const NotificationProvider = ({ children }: Props) => {
     const hide = () => { // hide notification
         setNotification(notification.slice(1)); // remove the first notification from the list
     }
-    useEffect(() => {
-        if(notification.length > 0 && notification[0].autoHide)
-            setTimeout(() => hide(), notification[0]?.duration || 3000); // hide the notification after the duration
-    }, [notification]);
 
     const styles = StyleSheet.create({
         parentContainer: {
