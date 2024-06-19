@@ -1,13 +1,16 @@
 import { View, Text, StyleSheet, Image, Touchable, TouchableOpacity, TouchableNativeFeedback, Alert, StyleSheetProperties } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { colors } from '../theme';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { pickImage, pickVideo } from '../utils/MediaPicker';
 import { createVideo } from '../utils/FFmpeg';
 import {VideoInfo} from '../utils/MediaPicker';
 import LottieView from 'lottie-react-native';
+import { NotificationContext, NotificationContextType } from '../context/NotoficationContext';
 const LoadingAnimation = require('../assets/loading_animation.json');
 const FlickCard = ({ flick }: { flick: Flick }) => {
+    const {showNotification}:any = useContext(NotificationContext); // get the showNotification function from NotificationContext
+
     const [image, setImage] = React.useState(flick.imageUrl || "https://via.placeholder.com/150"); // set the image path
     const [video, setVideo] = React.useState<VideoInfo>({
         thumbnail: "https://via.placeholder.com/150",
@@ -16,7 +19,9 @@ const FlickCard = ({ flick }: { flick: Flick }) => {
 
     const [isLoading, setIsLoading] = React.useState(false); // set the loading state
     const [isSaved, setIsSaved] = React.useState(false); // set the saved state
-    const handleSelfieSelect = () => {
+
+
+    const handleSelfieSelect = () => { // handle selfie select
         setIsLoading(false); // set loading state
         setIsSaved(false); // set saved state
 
@@ -31,10 +36,10 @@ const FlickCard = ({ flick }: { flick: Flick }) => {
     };
 
 
-    const handleVideoSelect = () => {
+    const handleVideoSelect = () => { // handle video select
+
         setIsLoading(false); // set loading state
         setIsSaved(false); // set saved state
-
         pickVideo() // open video picker
             .then((video) => {
                 console.log(video);
@@ -48,24 +53,26 @@ const FlickCard = ({ flick }: { flick: Flick }) => {
     const handleSave = async () => {
         // check if video and image are selected
         if (!video.videoUrl|| video.thumbnail == "https://via.placeholder.com/150" || image == "https://via.placeholder.com/150") {
-            Alert.alert('Please select video and image');
+            showNotification('Please select video and image', 'ERROR', 2000, 0,'BOTTOM'); // showNotification error notification
             return;
         }
+
         setIsLoading(true); // set loading state
         // save the flick
         const result = await createVideo(video.videoUrl, image); // create video
+        
         if (result !== 'FAILED' && result !== 'CANCELLED') {
-            console.log('Flick saved');
+            showNotification('Flick Saved', 'INFO', 3000, 0, 'TOP'); // showNotification info notification
             console.log(result);
             setIsSaved(true); // set saved state
         }
         else if (result === 'CANCELLED') {
             console.log('Flick creation cancelled');
-            Alert.alert('Flick creation cancelled');
+            showNotification('Flick creation cancelled', 'INFO', 3000, 0, 'TOP'); // showNotification info notification
         }
         else {
             console.log('Flick creation failed');
-            Alert.alert('Flick creation failed');
+            showNotification('Flick creation failed', 'ERROR', 3000, 0, 'TOP'); // showNotification error notification
         }
         setIsLoading(false); // set loading state
     }

@@ -20,6 +20,8 @@ import {
 import { colors } from './src/theme';
 import HomeScreen from './src/screens/Home';
 import { NavigationContainer } from '@react-navigation/native';
+import { NotificationProvider } from './src/context/NotoficationContext';
+
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const MainStack = createNativeStackNavigator();
@@ -32,6 +34,7 @@ function App(): React.JSX.Element {
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       />
+      <NotificationProvider>
       <NavigationContainer>
         <MainStack.Navigator>
           <MainStack.Screen name="Home" component={HomeScreen} options={{
@@ -40,6 +43,7 @@ function App(): React.JSX.Element {
           }} />
         </MainStack.Navigator>
       </NavigationContainer>
+      </NotificationProvider>
     </SafeAreaView>
   );
 }
