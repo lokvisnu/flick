@@ -106,7 +106,8 @@ const FlickCard = ({ flick }: { flick: Flick }) => {
                 { !isLoading 
                 && <TouchableOpacity
                     style={styles.saveButton}
-                    onPress={handleSave}>
+                    onPress={handleSave}
+                    disabled={isLoading || isSaved}>
                     <Icon name={!isSaved?'download':'file-download-done'} size={30} color={colors.primaryBackground} />
                 </TouchableOpacity>}
                 { isLoading && <LoadingAnimationView style={{width: 50, height: 50}}/>}
