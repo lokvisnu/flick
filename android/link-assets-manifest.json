@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/icon.jpeg",
+      "sha1": "37c1fdfd3cef1f7ff918741ac7fa5980548f4860"
+    },
+    {
+      "path": "src/assets/loading_animation.json",
+      "sha1": "f17d87e8168a4920c36449fae12cdccc4ae31a8d"
+    },
+    {
+      "path": "src/assets/mask.png",
+      "sha1": "4098dd1bb3e95b8daf38ae406ae503101e3094da"
+    }
+  ]
+}

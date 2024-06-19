@@ -62,7 +62,7 @@ const FlickCard = ({ flick }: { flick: Flick }) => {
         const result = await createVideo(video.videoUrl, image); // create video
 
         if (result !== 'FAILED' && result !== 'CANCELLED') {
-            showNotification('Flick Saved', 'INFO', 3000, 0, 'TOP'); // showNotification info notification
+            showNotification('Flick Saved', 'INFO', 0, 'TOP'); // showNotification info notification
             console.log(result);
             setIsSaved(true); // set saved state
         }
